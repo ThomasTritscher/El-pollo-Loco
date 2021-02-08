@@ -5,10 +5,11 @@ let character_y = 250; // Variable für Y-Achse
 let isMovingRight = false; //boolean variable
 let isMovingLeft = false;
 let bg_elements = 0;
-let isJumping = false;
-let isFalling = false;
+let lastJumpStarted = 0;
 
+//-------------------Game config--------------
 
+let JUMP_TIME = 300; // ms / Konstante immer GROß schreiben
 
 
 
@@ -16,8 +17,8 @@ function init() {
   canvas = document.getElementById('canvas'); // Html Element
   ctx = canvas.getContext("2d"); // der Bereich wo gemalt wird
 
-    draw();
-  
+  draw();
+
   listenForKeys();
 
 
@@ -35,15 +36,19 @@ function updateCharacter() {
   let base_image = new Image();// Variable
   base_image.src = 'img/charakter_1.png';// Quelle
 
-  if(isJumping) {
-    character_y = character_y - 10; 
-    
-    if(character_y < 120) {
-      isFalling = true;
-      isJumping = false;
+  let timePassedSinceJump = new Date().getTime() - lastJumpStarted;//aktueller Zeitpunkt - Zeitpunkt des Starts.
+
+  if (timePassedSinceJump < JUMP_TIME) {
+    character_y = character_y - 10;
+  } else
+    //Check falling
+
+    if (character_y < 250) {
+      character_y = character_y + 10;
+
     }
-  }
-  if(base_image.complete) { //Image wird geladen
+
+  if (base_image.complete) { //Image wird geladen
     ctx.drawImage(base_image, character_x, character_y, base_image.width * 0.35, base_image.height * 0.35); // Parameter der Zeichnung
   };
 
@@ -73,21 +78,21 @@ function drawGround() {
   //Kaktus1
   let base_image = new Image();// Variable
   base_image.src = 'img/bg_elem_1.png';// Quelle
-  if(base_image.complete) { //Image wird gezeichnet
+  if (base_image.complete) { //Image wird gezeichnet
     ctx.drawImage(base_image, bg_elements, 195, base_image.width * 0.6, base_image.height * 0.6); // Parameter der Zeichnung
   };
 
   //Kaktus2
   let base_image2 = new Image();// Variable
   base_image2.src = 'img/bg_elem_2.png';// Quelle
-  if(base_image2.complete) { //Image wird gezeichnet
+  if (base_image2.complete) { //Image wird gezeichnet
     ctx.drawImage(base_image2, 200 + bg_elements, 195, base_image.width * 0.6, base_image.height * 0.6); // Parameter der Zeichnung
   };
 }
 
 function listenForKeys() { //bei Tastendruck Pfeil rechts
   document.addEventListener("keydown", e => {
-    const k = e.key; 
+    const k = e.key;
 
     if (k == 'ArrowRight') {
       isMovingRight = true;
@@ -98,8 +103,10 @@ function listenForKeys() { //bei Tastendruck Pfeil rechts
       isMovingLeft = true;
       character_x = character_x - 5; //um 10px auf X-Achse zurück
     }
-    if (e.code == 'Space' && !isFalling) {
-      isJumping = true;
+    let timePassedSinceJump = new Date().getTime() - lastJumpStarted;
+
+    if (e.code == 'Space' && timePassedSinceJump > JUMP_TIME * 2) {// Space funktioniert kein 2mal in einer Zeitspanne unter 300ms *2,
+      lastJumpStarted = new Date().getTime();
     }
 
   });
@@ -117,9 +124,9 @@ function listenForKeys() { //bei Tastendruck Pfeil rechts
       isMovingLeft = false;
       character_x = character_x - 5;
     }
-    if (e.code == 'Space') {
-      isJumping = false;
-    }
+    //  if (e.code == 'Space') {
+    //   isJumping = false;
+    //  }
 
   });
 }
