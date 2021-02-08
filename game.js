@@ -1,10 +1,12 @@
 let canvas;
 let ctx; //ctx = context
 let character_x = 0; // Variable für X-Achse
+let character_y = 250; // Variable für Y-Achse
 let isMovingRight = false; //boolean variable
 let isMovingLeft = false;
 let bg_elements = 0;
-
+let isJumping = false;
+let isFalling = false;
 
 
 
@@ -32,8 +34,17 @@ function draw() {
 function updateCharacter() {
   let base_image = new Image();// Variable
   base_image.src = 'img/charakter_1.png';// Quelle
+
+  if(isJumping) {
+    character_y = character_y - 10; 
+    
+    if(character_y < 120) {
+      isFalling = true;
+      isJumping = false;
+    }
+  }
   if(base_image.complete) { //Image wird geladen
-    ctx.drawImage(base_image, character_x, 250, base_image.width * 0.35, base_image.height * 0.35); // Parameter der Zeichnung
+    ctx.drawImage(base_image, character_x, character_y, base_image.width * 0.35, base_image.height * 0.35); // Parameter der Zeichnung
   };
 
 }
@@ -76,8 +87,7 @@ function drawGround() {
 
 function listenForKeys() { //bei Tastendruck Pfeil rechts
   document.addEventListener("keydown", e => {
-    const k = e.key;
-    console.log(k == 'ArrowRight')
+    const k = e.key; 
 
     if (k == 'ArrowRight') {
       isMovingRight = true;
@@ -87,6 +97,9 @@ function listenForKeys() { //bei Tastendruck Pfeil rechts
     if (k == 'ArrowLeft') {
       isMovingLeft = true;
       character_x = character_x - 5; //um 10px auf X-Achse zurück
+    }
+    if (e.code == 'Space' && !isFalling) {
+      isJumping = true;
     }
 
   });
@@ -103,6 +116,9 @@ function listenForKeys() { //bei Tastendruck Pfeil rechts
     if (k == 'ArrowLeft') {
       isMovingLeft = false;
       character_x = character_x - 5;
+    }
+    if (e.code == 'Space') {
+      isJumping = false;
     }
 
   });
