@@ -1,8 +1,8 @@
 let canvas;
 let ctx; //ctx = context
-let character_x = 0; // Variable für X-Achse
-let character_y = 250; // Variable für Y-Achse
-let isMovingRight = false; //boolean variable
+let character_x = 0; // Var for X-Achse
+let character_y = 250; // Var for Y-Achse
+let isMovingRight = false; //boolean var
 let isMovingLeft = false;
 let bg_elements = 0;
 let lastJumpStarted = 0;
@@ -14,8 +14,8 @@ let JUMP_TIME = 300; // ms / Konstante immer GROß schreiben
 
 
 function init() {
-  canvas = document.getElementById('canvas'); // Html Element
-  ctx = canvas.getContext("2d"); // der Bereich wo gemalt wird
+  canvas = document.getElementById('canvas'); // Html Tag
+  ctx = canvas.getContext("2d"); // Zone for painting
 
   draw();
 
@@ -27,16 +27,16 @@ function draw() {
 
   drawBackground();
   updateCharacter();
-  requestAnimationFrame(draw);// zeichent nach Möglichkeit
+  requestAnimationFrame(draw);// drawing often as possible
 
 }
 
 
 function updateCharacter() {
   let base_image = new Image();// Variable
-  base_image.src = 'img/charakter_1.png';// Quelle
+  base_image.src = 'img/charakter_1.png';//Source
 
-  let timePassedSinceJump = new Date().getTime() - lastJumpStarted;//aktueller Zeitpunkt - Zeitpunkt des Starts.
+  let timePassedSinceJump = new Date().getTime() - lastJumpStarted;//currentTime - Start Time
 
   if (timePassedSinceJump < JUMP_TIME) {
     character_y = character_y - 10;
@@ -48,15 +48,15 @@ function updateCharacter() {
 
     }
 
-  if (base_image.complete) { //Image wird geladen
-    ctx.drawImage(base_image, character_x, character_y, base_image.width * 0.35, base_image.height * 0.35); // Parameter der Zeichnung
+  if (base_image.complete) { //Image load
+    ctx.drawImage(base_image, character_x, character_y, base_image.width * 0.35, base_image.height * 0.35); // params of the Image
   };
 
 }
 
 function drawBackground() {
 
-  ctx.fillStyle = "white"; //Farbauswahl
+  ctx.fillStyle = "white"; //Color
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   /*ctx.fillRect(100, 100, 200,200); //Form wird hinzugefügt, hier Viereck, Nummerierung koordinaten X-Achse,koordinaten Y-Achse,breite,höhe!*/
 
@@ -65,8 +65,7 @@ function drawBackground() {
 }
 
 function drawGround() {
-  ctx.fillStyle = "#FFE699";
-  ctx.fillRect(0, 375, canvas.width, canvas.height - 375);// Boden wird gezeichnet
+  
 
   if (isMovingRight) {
     bg_elements = bg_elements - 2;
@@ -75,33 +74,47 @@ function drawGround() {
   if (isMovingLeft) {
     bg_elements = bg_elements + 2;
   }
-  //Kaktus1
-  let base_image = new Image();// Variable
-  base_image.src = 'img/bg_elem_1.png';// Quelle
-  if (base_image.complete) { //Image wird gezeichnet
-    ctx.drawImage(base_image, bg_elements, 195, base_image.width * 0.6, base_image.height * 0.6); // Parameter der Zeichnung
-  };
 
-  //Kaktus2
-  let base_image2 = new Image();// Variable
-  base_image2.src = 'img/bg_elem_2.png';// Quelle
-  if (base_image2.complete) { //Image wird gezeichnet
-    ctx.drawImage(base_image2, 200 + bg_elements, 195, base_image.width * 0.6, base_image.height * 0.6); // Parameter der Zeichnung
-  };
+
+ addBackgoundObject('img/bg_elem_1.png', 0, 195, 0.6, 0.6);// var sourceImg, X-Achse, Y-Achse,ScaleImg,
+ addBackgoundObject('img/bg_elem_2.png', 450, 120, 0.6,);
+ addBackgoundObject('img/bg_elem_1.png', 700, 255, 0.4, 0.8);
+ addBackgoundObject('img/bg_elem_2.png', 1100, 260, 0.4);
+
+ //Draw ground
+ ctx.fillStyle = "#FFE699";
+ ctx.fillRect(0, 375, canvas.width, canvas.height - 375);
 }
 
-function listenForKeys() { //bei Tastendruck Pfeil rechts
+function addBackgoundObject(src, offsetX, offsetY, scale, opacity) {//opacity is an optional var!
+
+  if(opacity != undefined) {
+    ctx.globalAlpha = opacity;
+  }
+
+   //add Kaktus
+   let base_image = new Image();// Variable
+   base_image.src = src;// Source
+   if (base_image.complete) { //Image will painted
+     ctx.drawImage(base_image, offsetX + bg_elements, offsetY, base_image.width * scale, base_image.height * scale); // Params of the Image
+   }
+   
+   ctx.globalAlpha = 1;
+  
+}
+
+function listenForKeys() { //ArrowRight push
   document.addEventListener("keydown", e => {
     const k = e.key;
 
     if (k == 'ArrowRight') {
       isMovingRight = true;
-      character_x = character_x + 5; //um 10px auf X-Achse weiter
+      character_x = character_x + 5; 
     }
 
     if (k == 'ArrowLeft') {
       isMovingLeft = true;
-      character_x = character_x - 5; //um 10px auf X-Achse zurück
+      character_x = character_x - 5; 
     }
     let timePassedSinceJump = new Date().getTime() - lastJumpStarted;
 
@@ -111,7 +124,7 @@ function listenForKeys() { //bei Tastendruck Pfeil rechts
 
   });
 
-  document.addEventListener("keyup", e => { //loslassen der Taste
+  document.addEventListener("keyup", e => { //Key less
     const k = e.key;
     console.log(k == 'ArrowRight')
 
