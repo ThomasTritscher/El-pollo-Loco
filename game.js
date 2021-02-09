@@ -1,28 +1,52 @@
 let canvas;
 let ctx; //ctx = context
-let character_x = 0; // Var for X-Achse
+let character_x = 100; // Var for X-Achse
 let character_y = 250; // Var for Y-Achse
 let isMovingRight = false; //boolean var
 let isMovingLeft = false;
 let bg_elements = 0;
 let lastJumpStarted = 0;
+let currentCharacterImage = 'img/charakter_1.png';
+
 
 //-------------------Game config--------------
 
 let JUMP_TIME = 300; // ms / Konstante immer GROß schreiben
+let GAME_SPEED = 6;
 
 
 
 function init() {
   canvas = document.getElementById('canvas'); // Html Tag
   ctx = canvas.getContext("2d"); // Zone for painting
-
+  checkForRunning();
   draw();
 
   listenForKeys();
 
 
 }
+function checkForRunning() {
+  setInterval(function () {
+    if (isMovingRight) {
+      if (currentCharacterImage == 'img/charakter_1.png') {
+        currentCharacterImage = 'img/charakter_2.png';
+      } else {
+        currentCharacterImage = 'img/charakter_1.png';
+      }
+    }
+    if (isMovingLeft) {
+      if (currentCharacterImage == 'img/charakter_left_1.png') {
+        currentCharacterImage = 'img/charakter_left_2.png';
+      } else {
+        currentCharacterImage = 'img/charakter_left_1.png';
+      }
+    }
+
+  }, 200);// Image change every 200ms
+}
+
+
 function draw() {
 
   drawBackground();
@@ -34,7 +58,7 @@ function draw() {
 
 function updateCharacter() {
   let base_image = new Image();// Variable
-  base_image.src = 'img/charakter_1.png';//Source
+  base_image.src = currentCharacterImage;//Source
 
   let timePassedSinceJump = new Date().getTime() - lastJumpStarted;//currentTime - Start Time
 
@@ -65,42 +89,47 @@ function drawBackground() {
 }
 
 function drawGround() {
-  
+
 
   if (isMovingRight) {
-    bg_elements = bg_elements - 2;
+    bg_elements = bg_elements - GAME_SPEED;
   }
 
   if (isMovingLeft) {
-    bg_elements = bg_elements + 2;
+    bg_elements = bg_elements + GAME_SPEED;
   }
 
 
- addBackgoundObject('img/bg_elem_1.png', 0, 195, 0.6, 0.6);// var sourceImg, X-Achse, Y-Achse,ScaleImg,
- addBackgoundObject('img/bg_elem_2.png', 450, 120, 0.6,);
- addBackgoundObject('img/bg_elem_1.png', 700, 255, 0.4, 0.8);
- addBackgoundObject('img/bg_elem_2.png', 1100, 260, 0.4);
+  addBackgoundObject('img/bg_elem_1.png', 0, 195, 0.6, 0.6);// var sourceImg, X-Achse, Y-Achse,ScaleImg,
+  addBackgoundObject('img/bg_elem_2.png', 450, 120, 0.6,);
+  addBackgoundObject('img/bg_elem_1.png', 700, 255, 0.4, 0.8);
+  addBackgoundObject('img/bg_elem_2.png', 1100, 260, 0.4);
 
- //Draw ground
- ctx.fillStyle = "#FFE699";
- ctx.fillRect(0, 375, canvas.width, canvas.height - 375);
+  addBackgoundObject('img/bg_elem_1.png', 1200, 195, 0.6,);
+  addBackgoundObject('img/bg_elem_2.png', 1450, 120, 0.6, 0.8);
+  addBackgoundObject('img/bg_elem_1.png', 1700, 255, 0.4,);
+  addBackgoundObject('img/bg_elem_2.png', 2000, 260, 0.4, 0.6);
+
+  //Draw ground
+  ctx.fillStyle = "#FFE699";
+  ctx.fillRect(0, 375, canvas.width, canvas.height - 375);
 }
 
 function addBackgoundObject(src, offsetX, offsetY, scale, opacity) {//opacity is an optional var!
 
-  if(opacity != undefined) {
+  if (opacity != undefined) {
     ctx.globalAlpha = opacity;
   }
 
-   //add Kaktus
-   let base_image = new Image();// Variable
-   base_image.src = src;// Source
-   if (base_image.complete) { //Image will painted
-     ctx.drawImage(base_image, offsetX + bg_elements, offsetY, base_image.width * scale, base_image.height * scale); // Params of the Image
-   }
-   
-   ctx.globalAlpha = 1;
-  
+  //add Kaktus
+  let base_image = new Image();// Variable
+  base_image.src = src;// Source
+  if (base_image.complete) { //Image will painted
+    ctx.drawImage(base_image, offsetX + bg_elements, offsetY, base_image.width * scale, base_image.height * scale); // Params of the Image
+  }
+
+  ctx.globalAlpha = 1;
+
 }
 
 function listenForKeys() { //ArrowRight push
@@ -109,12 +138,12 @@ function listenForKeys() { //ArrowRight push
 
     if (k == 'ArrowRight') {
       isMovingRight = true;
-      character_x = character_x + 5; 
+      // character_x = character_x + 5; 
     }
 
     if (k == 'ArrowLeft') {
       isMovingLeft = true;
-      character_x = character_x - 5; 
+      // character_x = character_x - 5; 
     }
     let timePassedSinceJump = new Date().getTime() - lastJumpStarted;
 
@@ -130,12 +159,12 @@ function listenForKeys() { //ArrowRight push
 
     if (k == 'ArrowRight') {
       isMovingRight = false;
-      character_x = character_x + 5;
+      // character_x = character_x + 5;
     }
 
     if (k == 'ArrowLeft') {
       isMovingLeft = false;
-      character_x = character_x - 5;
+      // character_x = character_x - 5;
     }
     //  if (e.code == 'Space') {
     //   isJumping = false;
