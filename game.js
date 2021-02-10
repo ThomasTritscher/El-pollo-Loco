@@ -13,6 +13,7 @@ let characterGraphicsLeft = ['img/charakter_left_1.png', 'img/charakter_left_2.p
   'img/charakter_left_4.png'];
 let characterGraphicsIndex = 0;
 let cloudOffset = 0;// cloud movement
+let chickens = [];
 
 
 //-------------------Game config--------------
@@ -25,11 +26,31 @@ let GAME_SPEED = 6;
 function init() {
   canvas = document.getElementById('canvas'); // Html Tag
   ctx = canvas.getContext("2d"); // Zone for painting
+  createChickenList();
   checkForRunning();
   draw();
   calculateCloudOffset();
   listenForKeys();
+  calculateChickenPosition();
 }
+
+function calculateChickenPosition() {
+
+  setInterval(function () {
+    for (let i = 0; i < chickens.length; i++) {
+      let chicken = chickens[i];
+      chicken.position_x = chicken.position_x - chicken.speed;
+    }
+  }, 50);
+}
+function createChickenList() {
+  chickens = [
+    createChicken(1, 200),
+    createChicken(2, 400),
+    createChicken(1, 700),
+  ];
+}
+
 function calculateCloudOffset() {
   setInterval(function () {
     cloudOffset = cloudOffset + 0.25;
@@ -62,24 +83,20 @@ function draw() {
 
 }
 function drawChicken() {
-  let chickens = [
-    createChicken(1, 200),
-    createChicken(2, 400),
-    createChicken(1, 700),
-  ];
-
   for (let i = 0; i < chickens.length; i = i + 1) {
     let chicken = chickens[i];
     addBackgoundObject(chicken.img, chicken.position_x, chicken.position_y, chicken.scale, 1);
-    
+
   }
-}
+} 
+
 function createChicken(type, position_x) {
   return {
-    "img" : "img/chicken" + type + ".png",
-    "position_x" : position_x,
-    "position_y" : 325,
-    "scale" : 0.6,
+    "img": "img/chicken" + type + ".png",
+    "position_x": position_x,
+    "position_y": 325,
+    "scale": 0.6,
+    "speed": (Math.random() * 5)
   };
 }
 
