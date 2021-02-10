@@ -57,10 +57,31 @@ function draw() {
 
   drawBackground();
   updateCharacter();
+  drawChicken();
   requestAnimationFrame(draw);// drawing often as possible
 
 }
+function drawChicken() {
+  let chickens = [
+    createChicken(1, 200),
+    createChicken(2, 400),
+    createChicken(1, 700),
+  ];
 
+  for (let i = 0; i < chickens.length; i = i + 1) {
+    let chicken = chickens[i];
+    addBackgoundObject(chicken.img, chicken.position_x, chicken.position_y, chicken.scale, 1);
+    
+  }
+}
+function createChicken(type, position_x) {
+  return {
+    "img" : "img/chicken" + type + ".png",
+    "position_x" : position_x,
+    "position_y" : 325,
+    "scale" : 0.6,
+  };
+}
 
 function updateCharacter() {
   let base_image = new Image();// Variable
