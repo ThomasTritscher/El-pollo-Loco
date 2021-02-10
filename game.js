@@ -7,6 +7,11 @@ let isMovingLeft = false;
 let bg_elements = 0;
 let lastJumpStarted = 0;
 let currentCharacterImage = 'img/charakter_1.png';
+let characterGraphicsRight = ['img/charakter_1.png', 'img/charakter_2.png', 'img/charakter_3.png',
+ 'img/charakter_4.png']
+let characterGraphicsLeft = ['img/charakter_left_1.png', 'img/charakter_left_2.png', 'img/charakter_left_3.png',
+ 'img/charakter_left_4.png'];
+ let characterGraphicsIndex = 0;
 
 
 //-------------------Game config--------------
@@ -29,21 +34,17 @@ function init() {
 function checkForRunning() {
   setInterval(function () {
     if (isMovingRight) {
-      if (currentCharacterImage == 'img/charakter_1.png') {
-        currentCharacterImage = 'img/charakter_2.png';
-      } else {
-        currentCharacterImage = 'img/charakter_1.png';
-      }
+      let index = characterGraphicsIndex % characterGraphicsRight.length;
+      currentCharacterImage = characterGraphicsRight[index];
+      characterGraphicsIndex = characterGraphicsIndex + 1;
     }
     if (isMovingLeft) {
-      if (currentCharacterImage == 'img/charakter_left_1.png') {
-        currentCharacterImage = 'img/charakter_left_2.png';
-      } else {
-        currentCharacterImage = 'img/charakter_left_1.png';
-      }
+      let index = characterGraphicsIndex % characterGraphicsLeft.length;
+      currentCharacterImage = characterGraphicsLeft[index];
+      characterGraphicsIndex = characterGraphicsIndex + 1;
     }
 
-  }, 200);// Image change every 200ms
+  }, 100);// Image change every 200ms
 }
 
 
