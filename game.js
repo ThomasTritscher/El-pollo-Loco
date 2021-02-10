@@ -8,10 +8,11 @@ let bg_elements = 0;
 let lastJumpStarted = 0;
 let currentCharacterImage = 'img/charakter_1.png';
 let characterGraphicsRight = ['img/charakter_1.png', 'img/charakter_2.png', 'img/charakter_3.png',
- 'img/charakter_4.png']
+  'img/charakter_4.png']
 let characterGraphicsLeft = ['img/charakter_left_1.png', 'img/charakter_left_2.png', 'img/charakter_left_3.png',
- 'img/charakter_left_4.png'];
- let characterGraphicsIndex = 0;
+  'img/charakter_left_4.png'];
+let characterGraphicsIndex = 0;
+let cloudOffset = 0;
 
 
 //-------------------Game config--------------
@@ -26,11 +27,15 @@ function init() {
   ctx = canvas.getContext("2d"); // Zone for painting
   checkForRunning();
   draw();
-
+  calculateCloudOffset();
   listenForKeys();
-
-
 }
+function calculateCloudOffset() {
+  setInterval(function () {
+    cloudOffset = cloudOffset + 0.25;
+  }, 50);
+}
+
 function checkForRunning() {
   setInterval(function () {
     if (isMovingRight) {
@@ -86,6 +91,13 @@ function drawBackground() {
   /*ctx.fillRect(100, 100, 200,200); //Form wird hinzugefügt, hier Viereck, Nummerierung koordinaten X-Achse,koordinaten Y-Achse,breite,höhe!*/
 
   drawGround();
+
+  //Draw Clouds
+  addBackgoundObject('img/cloud1.png', 100 - cloudOffset, 20, 0.8, 1);
+  addBackgoundObject('img/cloud2.png', 500 - cloudOffset, 20, 0.6, 1);
+
+  addBackgoundObject('img/cloud1.png', 800 - cloudOffset, 20, 0.8, 1);
+  addBackgoundObject('img/cloud2.png', 1300 - cloudOffset, 20, 0.6, 1);
 
 }
 
