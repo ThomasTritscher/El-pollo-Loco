@@ -12,7 +12,7 @@ let characterGraphicsRight = ['img/charakter_1.png', 'img/charakter_2.png', 'img
 let characterGraphicsLeft = ['img/charakter_left_1.png', 'img/charakter_left_2.png', 'img/charakter_left_3.png',
   'img/charakter_left_4.png'];
 let characterGraphicsIndex = 0;
-let cloudOffset = 0;
+let cloudOffset = 0;// cloud movement
 
 
 //-------------------Game config--------------
@@ -86,6 +86,7 @@ function updateCharacter() {
 
 function drawBackground() {
 
+
   ctx.fillStyle = "white"; //Color
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   /*ctx.fillRect(100, 100, 200,200); //Form wird hinzugefügt, hier Viereck, Nummerierung koordinaten X-Achse,koordinaten Y-Achse,breite,höhe!*/
@@ -126,6 +127,11 @@ function drawGround() {
   //Draw ground
   ctx.fillStyle = "#FFE699";
   ctx.fillRect(0, 375, canvas.width, canvas.height - 375);
+
+  for (let i = 0; i < 10; i = i + 1) {
+    addBackgoundObject('img/sand.png', i * canvas.width, 375, 0.360, 0.5);
+  }
+
 }
 
 function addBackgoundObject(src, offsetX, offsetY, scale, opacity) {//opacity is an optional var!
