@@ -34,6 +34,20 @@ function init() {
   calculateCloudOffset();
   listenForKeys();
   calculateChickenPosition();
+  checkForCollision();
+}
+
+function checkForCollision() {
+  setInterval(function () {
+    for (let i = 0; i < chickens.length; i++) {
+      let chicken = chickens[i];
+
+      if((chicken.position_x - 40) < character_x && (chicken.position_x + 40) > character_x) {
+        alert('Kollision!!!');
+      }
+    }
+  }, 100);
+  
 }
 
 function calculateChickenPosition() {
