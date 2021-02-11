@@ -20,6 +20,8 @@ let chickens = [];
 
 let JUMP_TIME = 300; // ms / Konstante immer GROß schreiben
 let GAME_SPEED = 6;
+let AUDIO_RUNNING = new Audio('audio/run.mp3');
+let AUDIO_JUMP = new Audio('audio/jump.mp3');
 
 
 
@@ -60,17 +62,22 @@ function calculateCloudOffset() {
 function checkForRunning() {
   setInterval(function () {
     if (isMovingRight) {
+      AUDIO_RUNNING.play();
       let index = characterGraphicsIndex % characterGraphicsRight.length;
       currentCharacterImage = characterGraphicsRight[index];
       characterGraphicsIndex = characterGraphicsIndex + 1;
     }
     if (isMovingLeft) {
+      AUDIO_RUNNING.play();
       let index = characterGraphicsIndex % characterGraphicsLeft.length;
       currentCharacterImage = characterGraphicsLeft[index];
       characterGraphicsIndex = characterGraphicsIndex + 1;
     }
+    if (!isMovingRight && !isMovingLeft) {
+      AUDIO_RUNNING.pause();
+    }
 
-  }, 100);// Image change every 200ms
+  }, 100);// Image change every 100ms
 }
 
 
@@ -88,7 +95,7 @@ function drawChicken() {
     addBackgoundObject(chicken.img, chicken.position_x, chicken.position_y, chicken.scale, 1);
 
   }
-} 
+}
 
 function createChicken(type, position_x) {
   return {
@@ -204,7 +211,8 @@ function listenForKeys() { //ArrowRight push
     }
     let timePassedSinceJump = new Date().getTime() - lastJumpStarted;
 
-    if (e.code == 'Space' && timePassedSinceJump > JUMP_TIME * 2) {// Space funktioniert kein 2mal in einer Zeitspanne unter 300ms *2,
+    if (e.code == 'Space' && timePassedSinceJump > JUMP_TIME * 2) {
+      AUDIO_JUMP.play();
       lastJumpStarted = new Date().getTime();
     }
 
