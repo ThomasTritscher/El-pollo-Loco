@@ -2,6 +2,7 @@ let canvas;
 let ctx; //ctx = context
 let character_x = 100; // Var for X-Achse
 let character_y = 250; // Var for Y-Achse
+let character_energy = 100;
 let isMovingRight = false; //boolean var
 let isMovingLeft = false;
 let bg_elements = 0;
@@ -43,7 +44,7 @@ function checkForCollision() {
       let chicken = chickens[i];
 
       if((chicken.position_x - 40) < character_x && (chicken.position_x + 40) > character_x) {
-        alert('Kollision!!!');
+        character_energy--;
       }
     }
   }, 100);
@@ -101,7 +102,18 @@ function draw() {
   updateCharacter();
   drawChicken();
   requestAnimationFrame(draw);// drawing often as possible
+  drawEnergyBar();
 
+}
+function drawEnergyBar() {
+  ctx.globalAlpha = 0.5;//Opacity
+  ctx.fillStyle = "blue"; //Color
+  ctx.fillRect(500, 15, 2 * character_energy, 30);
+  ctx.globalAlpha = 0.2;
+  ctx.fillStyle = "black"; //Color
+  ctx.fillRect(495, 10, 210, 40);
+  ctx.globalAlpha = 1;
+  
 }
 function drawChicken() {
   for (let i = 0; i < chickens.length; i = i + 1) {
