@@ -42,13 +42,17 @@ function checkForCollision() {
   setInterval(function () {
     for (let i = 0; i < chickens.length; i++) {
       let chicken = chickens[i];
+      let chicken_x = chicken.position_x + bg_elements;
 
-      if((chicken.position_x - 40) < character_x && (chicken.position_x + 40) > character_x) {
-        character_energy--;
+      if ((chicken_x - 40) < character_x && (chicken_x + 40) > character_x) {
+        if (character_y > 210) {
+          character_energy--;
+        }
+
       }
     }
   }, 100);
-  
+
 }
 
 function calculateChickenPosition() {
@@ -113,7 +117,7 @@ function drawEnergyBar() {
   ctx.fillStyle = "black"; //Color
   ctx.fillRect(495, 10, 210, 40);
   ctx.globalAlpha = 1;
-  
+
 }
 function drawChicken() {
   for (let i = 0; i < chickens.length; i = i + 1) {
