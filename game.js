@@ -15,6 +15,7 @@ let characterGraphicsLeft = ['img/charakter_left_1.png', 'img/charakter_left_2.p
 let characterGraphicsIndex = 0;
 let cloudOffset = 0;// cloud movement
 let chickens = [];
+let placedBottles = [1000, 1700, 2500];
 
 
 //-------------------Game config--------------
@@ -40,6 +41,8 @@ function init() {
 
 function checkForCollision() {
   setInterval(function () {
+
+    // Check chicken
     for (let i = 0; i < chickens.length; i++) {
       let chicken = chickens[i];
       let chicken_x = chicken.position_x + bg_elements;
@@ -51,6 +54,19 @@ function checkForCollision() {
 
       }
     }
+    // Check bottle
+
+    for (let i = 0; i < placedBottles.length; i++) {
+      let bottle_x = placedBottles[i] +  bg_elements;// bottle position + shift background
+
+      if ((bottle_x - 40) < character_x && (bottle_x + 40) > character_x) {
+        if (character_y > 210) {
+          placedBottles.splice(i, 1);
+        }
+
+      }
+    }
+
   }, 100);
 
 }
@@ -107,6 +123,7 @@ function draw() {
   drawBackground();
   updateCharacter();
   drawChicken();
+  drawBottles();
   requestAnimationFrame(draw);// drawing often as possible
   drawEnergyBar();
 
@@ -119,6 +136,13 @@ function drawEnergyBar() {
   ctx.fillStyle = "black"; //Color
   ctx.fillRect(495, 10, 210, 40);
   ctx.globalAlpha = 1;
+
+}
+function drawBottles() {
+  for (let i = 0; i < placedBottles.length; i++) {
+    let bottle_x = placedBottles[i];
+    addBackgoundObject('img/tabasco.png', bottle_x, 318, 0.7, 1);
+  }
 
 }
 function drawChicken() {
