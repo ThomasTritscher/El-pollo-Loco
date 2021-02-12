@@ -17,7 +17,7 @@ let cloudOffset = 0;// cloud movement
 let chickens = [];
 let placedBottles = [1000, 1700, 2500];
 let collectedBottles = 0;
-
+let bottleThrowTime;      // Start value is undefined
 
 //-------------------Game config--------------
 
@@ -133,8 +133,25 @@ function draw() {
   requestAnimationFrame(draw);// drawing often as possible
   drawEnergyBar();
   drawInformation();
+  drawThrowBottle();
 
 }
+function drawThrowBottle() {
+  if (bottleThrowTime) {
+    let timePassed = new Date().getTime() - bottleThrowTime;
+    let gravity = Math.pow(9.81, timePassed / 300);
+    let bottle_x = 125 + (timePassed * 0.7);
+    let bottle_y = 300 - (timePassed * 0.5 - gravity);
+
+    let base_image = new Image();
+    base_image.src = 'img/tabasco.png';
+    if (base_image.complete) {
+      ctx.drawImage(base_image, bottle_x, bottle_y, base_image.width * 0.5, base_image.height * 0.5);
+    }
+  }
+}
+
+
 function drawInformation() {
 
   let base_image = new Image();// Variable
@@ -290,6 +307,7 @@ function listenForKeys() { //ArrowRight push
   document.addEventListener("keydown", e => {
     const k = e.key;
 
+
     if (k == 'ArrowRight') {
       isMovingRight = true;
       // character_x = character_x + 5; 
@@ -299,6 +317,12 @@ function listenForKeys() { //ArrowRight push
       isMovingLeft = true;
       // character_x = character_x - 5; 
     }
+    if (k == 'd') {
+      collectedBottles--;
+      bottleThrowTime = new Date().getTime();
+      // Bottle throw
+    }
+
     let timePassedSinceJump = new Date().getTime() - lastJumpStarted;
 
     if (e.code == 'Space' && timePassedSinceJump > JUMP_TIME * 2) {
