@@ -66,9 +66,11 @@ function calculateChickenPosition() {
 }
 function createChickenList() {
   chickens = [
-    createChicken(1, 200),
-    createChicken(2, 400),
     createChicken(1, 700),
+    createChicken(2, 1400),
+    createChicken(1, 1800),
+    createChicken(2, 2500),
+    createChicken(1, 3000),
   ];
 }
 
@@ -171,9 +173,15 @@ function drawBackground() {
   //Draw Clouds
   addBackgoundObject('img/cloud1.png', 100 - cloudOffset, 20, 0.8, 1);
   addBackgoundObject('img/cloud2.png', 500 - cloudOffset, 20, 0.6, 1);
-
   addBackgoundObject('img/cloud1.png', 800 - cloudOffset, 20, 0.8, 1);
+
   addBackgoundObject('img/cloud2.png', 1300 - cloudOffset, 20, 0.6, 1);
+  addBackgoundObject('img/cloud1.png', 1800 - cloudOffset, 20, 0.8, 1);
+  addBackgoundObject('img/cloud2.png', 2300 - cloudOffset, 20, 0.6, 1);
+
+  addBackgoundObject('img/cloud1.png', 2800 - cloudOffset, 20, 0.8, 1);
+  addBackgoundObject('img/cloud2.png', 3000 - cloudOffset, 20, 0.6, 1);
+  addBackgoundObject('img/cloud2.png', 3200 - cloudOffset, 20, 0.6, 1);
 
 }
 
@@ -184,11 +192,11 @@ function drawGround() {
     bg_elements = bg_elements - GAME_SPEED;
   }
 
-  if (isMovingLeft) {
+  if (isMovingLeft && bg_elements < 500) {
     bg_elements = bg_elements + GAME_SPEED;
   }
 
-
+  // draw Kaktus
   addBackgoundObject('img/bg_elem_1.png', 0, 195, 0.6, 0.6);// var sourceImg, X-Achse, Y-Achse,ScaleImg,
   addBackgoundObject('img/bg_elem_2.png', 450, 120, 0.6,);
   addBackgoundObject('img/bg_elem_1.png', 700, 255, 0.4, 0.8);
@@ -199,6 +207,15 @@ function drawGround() {
   addBackgoundObject('img/bg_elem_1.png', 1700, 255, 0.4,);
   addBackgoundObject('img/bg_elem_2.png', 2000, 260, 0.4, 0.6);
 
+  addBackgoundObject('img/bg_elem_1.png', 2200, 195, 0.6,);
+  addBackgoundObject('img/bg_elem_2.png', 2450, 120, 0.6, 0.8);
+  addBackgoundObject('img/bg_elem_1.png', 2700, 255, 0.4,);
+  addBackgoundObject('img/bg_elem_2.png', 3000, 260, 0.4, 0.6);
+
+  addBackgoundObject('img/bg_elem_1.png', 3200, 195, 0.6,);
+  addBackgoundObject('img/bg_elem_2.png', 3450, 120, 0.6, 0.8);
+  addBackgoundObject('img/bg_elem_1.png', 3700, 255, 0.4,);
+  addBackgoundObject('img/bg_elem_2.png', 4000, 260, 0.4, 0.6);
   //Draw ground
   ctx.fillStyle = "#FFE699";
   ctx.fillRect(0, 375, canvas.width, canvas.height - 375);
