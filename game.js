@@ -16,6 +16,7 @@ let characterGraphicsIndex = 0;
 let cloudOffset = 0;// cloud movement
 let chickens = [];
 let placedBottles = [1000, 1700, 2500];
+let collectedBottles = 0;
 
 
 //-------------------Game config--------------
@@ -24,7 +25,7 @@ let JUMP_TIME = 300; // ms / Konstante immer GROß schreiben
 let GAME_SPEED = 6;
 let AUDIO_RUNNING = new Audio('audio/run.mp3');
 let AUDIO_JUMP = new Audio('audio/jump.mp3');
-
+let AUDIO_BOTTLE = new Audio('audio/bottle.mp3');
 
 
 function init() {
@@ -37,7 +38,10 @@ function init() {
   listenForKeys();
   calculateChickenPosition();
   checkForCollision();
+
 }
+
+
 
 function checkForCollision() {
   setInterval(function () {
@@ -57,11 +61,13 @@ function checkForCollision() {
     // Check bottle
 
     for (let i = 0; i < placedBottles.length; i++) {
-      let bottle_x = placedBottles[i] +  bg_elements;// bottle position + shift background
+      let bottle_x = placedBottles[i] + bg_elements;// bottle position + shift background
 
       if ((bottle_x - 40) < character_x && (bottle_x + 40) > character_x) {
         if (character_y > 210) {
           placedBottles.splice(i, 1);
+          AUDIO_BOTTLE.play();
+          collectedBottles++;
         }
 
       }
@@ -126,8 +132,21 @@ function draw() {
   drawBottles();
   requestAnimationFrame(draw);// drawing often as possible
   drawEnergyBar();
+  drawInformation();
 
 }
+function drawInformation() {
+
+  let base_image = new Image();// Variable
+  base_image.src = 'img/tabasco.png';// Source
+  if (base_image.complete) { //Image will painted
+    ctx.drawImage(base_image, 0, 0, base_image.width * 0.5, base_image.height * 0.5); // Params of the Image
+  }
+
+  ctx.font = '30px Bradley Hand ITC';
+  ctx.fillText('x' + collectedBottles, 50, 30);
+}
+
 function drawEnergyBar() {
   ctx.globalAlpha = 0.5;//Opacity
   ctx.fillStyle = "blue"; //Color
