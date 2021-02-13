@@ -18,6 +18,8 @@ let chickens = [];
 let placedBottles = [500, 1000, 1700, 2500, 3000, 3200, 3700, 4200, 4500];
 let collectedBottles = 0;
 let bottleThrowTime = 0;      // Start value is undefined
+let thrownBottle_x = 0;
+let thrownBottle_y = 0;
 
 //-------------------Game config--------------
 
@@ -69,9 +71,15 @@ function checkForCollision() {
           AUDIO_BOTTLE.play();
           collectedBottles++;
         }
-
       }
     }
+
+    //Check Big boss
+    if (thrownBottle_x > 1000 + bg_elements - 100 && thrownBottle_x < 1000 + bg_elements + 100) {
+      
+    }
+
+
 
   }, 100);
 
@@ -134,19 +142,25 @@ function draw() {
   drawEnergyBar();
   drawInformation();
   drawThrowBottle();
+  drawBigBoss();
 
+}
+function drawBigBoss() {
+  let chicken_x = 5000;
+  addBackgoundObject('img/chicken_big.png', chicken_x, 98, 0.45, 1);
+  
 }
 function drawThrowBottle() {
   if (bottleThrowTime) {
     let timePassed = new Date().getTime() - bottleThrowTime;
     let gravity = Math.pow(9.81, timePassed / 300);
-    let bottle_x = 125 + (timePassed * 0.7);
-    let bottle_y = 300 - (timePassed * 0.5 - gravity);
+    let thrownBottle_x = 125 + (timePassed * 0.7);
+    let thrownBottle_y = 300 - (timePassed * 0.5 - gravity);
 
     let base_image = new Image();
     base_image.src = 'img/tabasco.png';
     if (base_image.complete) {
-      ctx.drawImage(base_image, bottle_x, bottle_y, base_image.width * 0.5, base_image.height * 0.5);
+      ctx.drawImage(base_image, thrownBottle_x, thrownBottle_y, base_image.width * 0.5, base_image.height * 0.5);
     }
   }
 }
