@@ -3,6 +3,7 @@ let ctx; //ctx = context
 let character_x = 100; // Var for X-Achse
 let character_y = 250; // Var for Y-Achse
 let character_energy = 100;
+let bigBoss_energy = 100;
 let isMovingRight = false; //boolean var
 let isMovingLeft = false;
 let bg_elements = 0;
@@ -76,7 +77,7 @@ function checkForCollision() {
 
     //Check Big boss
     if (thrownBottle_x > 1000 + bg_elements - 100 && thrownBottle_x < 1000 + bg_elements + 100) {
-      
+      bigBoss_energy = bigBoss_energy - 10;
     }
 
 
@@ -148,7 +149,15 @@ function draw() {
 function drawBigBoss() {
   let chicken_x = 5000;
   addBackgoundObject('img/chicken_big.png', chicken_x, 98, 0.45, 1);
-  
+
+  ctx.globalAlpha = 0.5;//Opacity
+  ctx.fillStyle = "red"; //Color
+  ctx.fillRect(970 + bg_elements, 95, 2 * bigBoss_energy, 10);
+  ctx.globalAlpha = 0.2;
+  ctx.fillStyle = "black"; 
+  ctx.fillRect(967 + bg_elements, 92, 205, 10);
+  ctx.globalAlpha = 1;
+
 }
 function drawThrowBottle() {
   if (bottleThrowTime) {
