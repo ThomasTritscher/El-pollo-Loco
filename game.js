@@ -15,9 +15,9 @@ let characterGraphicsLeft = ['img/charakter_left_1.png', 'img/charakter_left_2.p
 let characterGraphicsIndex = 0;
 let cloudOffset = 0;// cloud movement
 let chickens = [];
-let placedBottles = [1000, 1700, 2500];
+let placedBottles = [500, 1000, 1700, 2500, 3000, 3200, 3700, 4200, 4500];
 let collectedBottles = 0;
-let bottleThrowTime;      // Start value is undefined
+let bottleThrowTime = 0;      // Start value is undefined
 
 //-------------------Game config--------------
 
@@ -317,10 +317,13 @@ function listenForKeys() { //ArrowRight push
       isMovingLeft = true;
       // character_x = character_x - 5; 
     }
-    if (k == 'd') {
-      collectedBottles--;
-      bottleThrowTime = new Date().getTime();
-      // Bottle throw
+    if (k == 'd' && collectedBottles > 0) { //bottle number must be above zero
+      let timePassed = new Date().getTime() - bottleThrowTime;
+      if (timePassed > 1000) {
+        collectedBottles--;
+        bottleThrowTime = new Date().getTime();
+        // Bottle throw
+      }
     }
 
     let timePassedSinceJump = new Date().getTime() - lastJumpStarted;
