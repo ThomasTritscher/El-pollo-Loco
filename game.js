@@ -29,6 +29,12 @@ let GAME_SPEED = 6;
 let AUDIO_RUNNING = new Audio('audio/run.mp3');
 let AUDIO_JUMP = new Audio('audio/jump.mp3');
 let AUDIO_BOTTLE = new Audio('audio/bottle.mp3');
+let AUDIO_CHICKEN = new Audio('audio/chicken.mp3');
+let AUDIO_THROW = new Audio('audio/throw.mp3');
+let AUDIO_GLASS = new Audio('audio/glass.mp3');
+/*let AUDIO_BACKGROUND_MUSIC = new Audio('audio/bottle.mp3');
+AUDIO_BACKGROUND_MUSIC.loop = true;
+AUDIO_BACKGROUND_MUSIC.volumen = 0.2;*/
 
 
 function init() {
@@ -78,6 +84,7 @@ function checkForCollision() {
     //Check Big boss
     if (thrownBottle_x > 1000 + bg_elements - 100 && thrownBottle_x < 1000 + bg_elements + 100) {
       bigBoss_energy = bigBoss_energy - 10;
+      AUDIO_GLASS.play();
     }
 
 
@@ -345,6 +352,7 @@ function listenForKeys() { //ArrowRight push
       if (timePassed > 1000) {
         collectedBottles--;
         bottleThrowTime = new Date().getTime();
+        AUDIO_THROW.play();
         // Bottle throw
       }
     }
