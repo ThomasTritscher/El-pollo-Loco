@@ -21,11 +21,13 @@ let collectedBottles = 0;
 let bottleThrowTime = 0;      // Start value is undefined
 let thrownBottle_x = 0;
 let thrownBottle_y = 0;
+let bossDefeatedAt = 0;
 
 //-------------------Game config--------------
 
 let JUMP_TIME = 300; // ms / Konstante immer GROß schreiben
 let GAME_SPEED = 6;
+let BOSS_POSITION = 5000;
 let AUDIO_RUNNING = new Audio('audio/run.mp3');
 let AUDIO_JUMP = new Audio('audio/jump.mp3');
 let AUDIO_BOTTLE = new Audio('audio/bottle.mp3');
@@ -82,9 +84,14 @@ function checkForCollision() {
     }
 
     //Check Big boss
-    if (thrownBottle_x > 1000 + bg_elements - 100 && thrownBottle_x < 1000 + bg_elements + 100) {
-      bigBoss_energy = bigBoss_energy - 10;
-      AUDIO_GLASS.play();
+    if (thrownBottle_x > BOSS_POSITION + bg_elements - 100 && thrownBottle_x < BOSS_POSITION + bg_elements + 100) {
+      if (bigBoss_energy > 0) {
+        bigBoss_energy = bigBoss_energy - 10;
+        AUDIO_GLASS.play();
+      } else {
+        bossDefeatedAt = new Date().getTime();
+      }
+
     }
 
 
@@ -152,18 +159,30 @@ function draw() {
   drawThrowBottle();
   drawBigBoss();
 
+
 }
 function drawBigBoss() {
-  let chicken_x = 5000;
-  addBackgoundObject('img/chicken_big.png', chicken_x, 98, 0.45, 1);
+  let chicken_x = BOSS_POSITION;
+  let chicken_y = 98;
+  let bossImage = 'img/chicken_big.png';
+  if (bossDefeatedAt > 0) {
+    let timePassed = new Date().getTime() - bossDefeatedAt;
+    chicken_x = chicken_x + timePassed * 0.7;
+    chicken_y = chicken_y - timePassed * 0.3;
+    bossImage = 'img/chicken_dead.png';
+  }
+  addBackgoundObject(bossImage, chicken_x, 98, 0.45, 1);
 
-  ctx.globalAlpha = 0.5;//Opacity
-  ctx.fillStyle = "red"; //Color
-  ctx.fillRect(970 + bg_elements, 95, 2 * bigBoss_energy, 10);
-  ctx.globalAlpha = 0.2;
-  ctx.fillStyle = "black"; 
-  ctx.fillRect(967 + bg_elements, 92, 205, 10);
-  ctx.globalAlpha = 1;
+  if (bossDefeatedAt == 0) {
+    ctx.globalAlpha = 0.5;//Opacity
+    ctx.fillStyle = "red"; //Color
+    ctx.fillRect(BOSS_POSITION - 30 + bg_elements, 95, 2 * bigBoss_energy, 10);
+    ctx.globalAlpha = 0.2;
+    ctx.fillStyle = "black";
+    ctx.fillRect(BOSS_POSITION - 32 + bg_elements, 92, 205, 10);
+    ctx.globalAlpha = 1;
+  }
+
 
 }
 function drawThrowBottle() {
