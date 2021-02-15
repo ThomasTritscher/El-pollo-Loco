@@ -22,6 +22,7 @@ let bottleThrowTime = 0;      // Start value is undefined
 let thrownBottle_x = 0;
 let thrownBottle_y = 0;
 let bossDefeatedAt = 0;
+let game_finished = false;
 
 //-------------------Game config--------------
 
@@ -34,9 +35,10 @@ let AUDIO_BOTTLE = new Audio('audio/bottle.mp3');
 let AUDIO_CHICKEN = new Audio('audio/chicken.mp3');
 let AUDIO_THROW = new Audio('audio/throw.mp3');
 let AUDIO_GLASS = new Audio('audio/glass.mp3');
-/*let AUDIO_BACKGROUND_MUSIC = new Audio('audio/bottle.mp3');
+let AUDIO_WIN = new Audio('audio/win.mp3');
+let AUDIO_BACKGROUND_MUSIC = new Audio('audio/music.mp3');
 AUDIO_BACKGROUND_MUSIC.loop = true;
-AUDIO_BACKGROUND_MUSIC.volumen = 0.2;*/
+AUDIO_BACKGROUND_MUSIC.volumen = 0.2;
 
 
 function init() {
@@ -88,15 +90,22 @@ function checkForCollision() {
       if (bigBoss_energy > 0) {
         bigBoss_energy = bigBoss_energy - 10;
         AUDIO_GLASS.play();
-      } else {
+      } else if (bossDefeatedAt == 0) {
         bossDefeatedAt = new Date().getTime();
+        finishLevel();
       }
 
     }
-
-
-
   }, 100);
+
+}
+
+function finishLevel() {
+  AUDIO_CHICKEN.play();
+  setTimeout(function () {
+    AUDIO_WIN.play();
+  }, 500);
+  game_finished = true;
 
 }
 
@@ -150,15 +159,24 @@ function checkForRunning() {
 function draw() {
 
   drawBackground();
-  updateCharacter();
-  drawChicken();
-  drawBottles();
-  requestAnimationFrame(draw);// drawing often as possible
-  drawEnergyBar();
-  drawInformation();
-  drawThrowBottle();
+  if (game_finished) {
+    drawFinalScreen();
+    //Draw success screen
+  } else {
+    updateCharacter();
+    drawChicken();
+    drawBottles();
+    requestAnimationFrame(draw);// drawing often as possible
+    drawEnergyBar();
+    drawInformation();
+    drawThrowBottle();
+  }
   drawBigBoss();
+}
 
+function drawFinalScreen() {
+  ctx.font = '100px Bradley Hand ITC';
+  ctx.fillText('YOU WON!!', 120, 200);
 
 }
 function drawBigBoss() {
