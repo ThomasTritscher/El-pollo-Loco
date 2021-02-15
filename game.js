@@ -23,6 +23,7 @@ let thrownBottle_x = 0;
 let thrownBottle_y = 0;
 let bossDefeatedAt = 0;
 let game_finished = false;
+let character_lost_at = 0;
 
 //-------------------Game config--------------
 
@@ -66,9 +67,13 @@ function checkForCollision() {
 
       if ((chicken_x - 40) < character_x && (chicken_x + 40) > character_x) {
         if (character_y > 210) {
-          character_energy--;
+          if (character_energy > 0) {
+            character_energy = character_energy - 10;
+          } else {
+            character_lost_at = new Date().getTime();
+            game_finished = true
+          }
         }
-
       }
     }
     // Check bottle
@@ -125,6 +130,12 @@ function createChickenList() {
     createChicken(1, 1800),
     createChicken(2, 2500),
     createChicken(1, 3000),
+    createChicken(1, 3200),
+    createChicken(2, 3400),
+    createChicken(1, 3800),
+    createChicken(2, 4100),
+    createChicken(1, 4400),
+    createChicken(1, 4700),
   ];
 }
 
@@ -176,7 +187,12 @@ function draw() {
 
 function drawFinalScreen() {
   ctx.font = '100px Bradley Hand ITC';
-  ctx.fillText('YOU WON!!', 120, 200);
+  let message = 'YOU WON!!';
+
+  if (character_lost_at > 0) {
+    message = 'YOU LOST!';
+  }
+  ctx.fillText(message, 120, 200);
 
 }
 function drawBigBoss() {
