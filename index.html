@@ -1,18 +1,58 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <meta charset='utf-8'>
-  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <title>El pollo Loco</title>
-  <meta name='viewport' content='width=device-width, initial-scale=1'>
-  <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
-  <script src='game.js'></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Oi&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="game.js"></script>
+    <title>El Pollo Loco</title>
+    <link rel="shortcut icon" type="image/x-icon" href="img/icons/boss-icon-1.png">
 </head>
-<body onload="init()">
-  
-  <h1>El pollo Loco</h1>
-  
-  <canvas id="canvas" width="720" height="480"></canvas>
+
+<body>
+    <!-- Header -->
+    <header id="header">
+        <h1>El Pollo Loco</h1>
+    </header>
+
+    <!-- Start Button -->
+    <div class="btn-start-box" id="btn-start-box">
+        <div class="button-box">
+          <button class="btn-start" onclick="startGame()"><strong>Start</strong></button>
+        </div>
+      </div>
+    <!-- Canvas Box -->
+    <div id="canvas-box" class="d-none canvas-box">
+        <canvas id="canvas" width="920" height="480"></canvas>
+    </div>
+
+    <!-- Game Over Box -->
+    <div class="btn-gameOver-box d-none" id="btn-gameOver-box">
+        <h2>Game Over!</h2>
+        <button class="btn-restart" onclick="window.location.reload()">Restart</button>
+    </div>
+
+    <!-- You Wins Box -->
+    <div class="btn-win-box d-none" id="btn-win-box">
+        <h2>Congratulations! You win!</h2>
+        <button class="btn-restart" onclick="window.location.reload()">Restart!</button>
+    </div>
+
+    <!-- Help Screen -->
+    <div class="help-screen d-none" id="help-screen">
+    </div>
+
+    <!-- Controls Help -->
+    <footer id="controls-box">
+        <h3 class="controls">Pfeile Links/Rechts = Gehen | Spacebar = Sprung | C Taste = Flaschen Wurf</h3>
+        <h3 class="controls">H = Hilfe | M = An/Aus Hintergrund Musik | R = Neustart</h3>
+    </footer>
 
 </body>
+
 </html>
