@@ -103,6 +103,20 @@ h3 {
     opacity  : 0;
     animation: disappearAni 2s ease;
 }
+.gameOver-img {
+    width: 920px;
+    height: 485px;
+    background: black;
+}
+
+.btn-restart {
+    position: absolute;
+    margin-top: 364px;
+    width: 5rem;
+    height: 2rem;
+    font-family: arial;
+    font-size: 1rem;
+}
 
 @keyframes shadow-pulse {
     0% {
