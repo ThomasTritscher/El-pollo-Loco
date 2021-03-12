@@ -741,10 +741,10 @@ function listenForKeys() {
             isMovingRight = false;
             lastMoveForward = false;
         }
-        if (k == "ArrowUp") {
+        if (k == " ") {
             if (!isFalling) isJumping = true;
         }
-        if (k == " ") {
+        if (k == "c") {
             if (collectableObject["bottle1"].count > 0) takeBottle = true;
         }
         if (k == "m") {
@@ -753,12 +753,8 @@ function listenForKeys() {
             else if (!AUDIO_BGMUSIC3.paused && endScreenOn) AUDIO_BGMUSIC3.pause();
             else if (AUDIO_BGMUSIC3.paused && endScreenOn) AUDIO_BGMUSIC3.play();
         }
-        if(k == "r") {
+        if(k == "n") {
             window.location.reload();
-        }
-        if(k == "h") {
-            document.getElementById("help-screen").classList.remove("d-none");
-            document.getElementById("canvas-box").classList.add("d-none");
         }
     });
 
@@ -778,17 +774,13 @@ function listenForKeys() {
             if (character_y < 220) isFalling = true;
             else if (character_y > 219) isFalling = false;
         }
-        if (k == " ") {
+        if (k == "c") {
             if (collectableObject["bottle1"].count > 0)  {
                 collectableObject["bottle1"].count--;
                 throwStartTime = new Date().getTime();
             }
         }
-        if(k == "h") {
-            document.getElementById("help-screen").classList.add("d-none");
-            document.getElementById("canvas-box").classList.remove("d-none");
-
-        }
+        
     });
 }
 
