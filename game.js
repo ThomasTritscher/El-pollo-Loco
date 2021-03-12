@@ -37,7 +37,7 @@ let bgImgSettings = {};
 let bgCounter = 0;
 
 //Variables for the character
-let character_x = 300;
+let character_x = 50;
 let character_y = 220;
 
 let JUMP_HEIGHT = 120;
@@ -237,7 +237,7 @@ function checkForHurt(image) {
         AUDIO_JUMP.pause();
         graphics.standing.counter = 0;
         image = graphics.dead.cachedImages[graphics.dead.index];
-        animateGraphic(graphics.dead, 3);
+        animateGraphic(graphics.dead, 2);
     }
     return image;
 }
