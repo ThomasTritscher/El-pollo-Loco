@@ -9,8 +9,8 @@ let AUDIO_WALK = new Audio('./audio/walk.mp3');
 let AUDIO_JUMP = new Audio('./audio/jump.mp3');
 let AUDIO_SNORING = new Audio('./audio/snoring.mp3');
 let AUDIO_YAWNING = new Audio('./audio/yawning.mp3');
-let AUDIO_BGMUSIC1 = new Audio('./audio/bgSound-1.mp3');
-let AUDIO_BGMUSIC3 = new Audio('./audio/bgSound-3.mp3');
+let AUDIO_BGMUSIC1 = new Audio('./audio/bg_music.mp3');
+let AUDIO_BGMUSIC3 = new Audio('./audio/.mp3');
 let AUDIO_DEAD = new Audio('./audio/hurt.mp3');
 let AUDIO_COIN = new Audio('./audio/coin.mp3');
 let AUDIO_BOSS1 = new Audio('./audio/boss_sound1.mp3');
@@ -20,7 +20,7 @@ let AUDIO_START = new Audio('./audio/start.mp3');
 AUDIO_COIN.volume = 0.2;
 AUDIO_BOSS1.volume = 0.4;
 
-AUDIO_BGMUSIC1.volume = 0.2;
+AUDIO_BGMUSIC1.volume = 0.3;
 AUDIO_BGMUSIC3.volume = 0.2;
 
 let AUDIO_ENEMYDYING = new Audio('./audio/chicken-dying.mp3');
