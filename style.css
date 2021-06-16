@@ -136,3 +136,10 @@ h3 {
   
     }
   }
+
+  @media (max-width: 500px) {
+      
+    body{
+          width: 500px;
+      }
+  }
